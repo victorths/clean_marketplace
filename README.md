@@ -18,7 +18,7 @@ There's no build runner nedeed to run the project itself, just on the tests, if 
 
 `flutter run`
 
-This project works on every plataform that flutter supports (Android, IOS, WEB, Linux, Windows and MAC), you can choise any of these to run.
+This project works the following plataforms with flutter 2.2.2 version: Android, IOS, WEB and Linux, you can choise any of these to run.
 
 # How to Test
 
