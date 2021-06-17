@@ -58,16 +58,24 @@ class GraphQLDatasource implements IGraphQLDatasource {
   );
 
   @override
-  Future<Map<String, dynamic>> getCustomer() async {
-    final response = await dio.post(graphQLURL,
-        data: {"query": customerQuery, "operationName": "Customer"});
-    return response.data;
+  Future<Map<String, dynamic>?> getCustomer() async {
+    try {
+      final response = await dio.post(graphQLURL,
+          data: {"query": customerQuery, "operationName": "Customer"});
+      return response.data;
+    } on Exception {
+      // http exception
+    }
   }
 
   @override
-  Future<Map<String, dynamic>> makePurchase(String offerId) async {
-    final response =
-        await dio.post(graphQLURL, data: {"query": purchaseMutation(offerId)});
-    return response.data;
+  Future<Map<String, dynamic>?> makePurchase(String offerId) async {
+    try {
+      final response = await dio
+          .post(graphQLURL, data: {"query": purchaseMutation(offerId)});
+      return response.data;
+    } on Exception {
+      // http exception
+    }
   }
 }

@@ -1,4 +1,6 @@
+import 'package:clean_marketplace/core/services/notifications.dart';
 import 'package:clean_marketplace/domain/entity/customer.dart';
+import 'package:clean_marketplace/domain/entity/offer.dart';
 import 'package:clean_marketplace/domain/entity/purchase_request.dart';
 import 'package:clean_marketplace/domain/use_cases/get_customer_use_case.dart';
 import 'package:clean_marketplace/domain/use_cases/make_purchase_use_case.dart';
@@ -13,7 +15,6 @@ class OffersController extends GetxController {
     required this.makePurchaseUseCase,
   });
 
-  PurchaseRequest purchase = PurchaseRequest();
   final _customer = Rx<Customer?>(null);
   final _loading = true.obs;
 
@@ -28,16 +29,19 @@ class OffersController extends GetxController {
     getCustomerUseCase().then((customer) {
       this.customer = customer;
     }).catchError((onError) {
-      print(onError);
+      Notifications.error(message: onError.toString());
     }).whenComplete(() => loading = false);
   }
 
-  Future<void> makePurchase() async {
+  Future<void> makePurchase(Offer offer) async {
     loading = true;
+    final purchase = PurchaseRequest(offerId: offer.id);
     makePurchaseUseCase(purchase).then((purchase) {
       this.customer = purchase?.customer;
+      Get.back();
+      Notifications.success(message: "Offer successfully purchased!");
     }).catchError((onError) {
-      print(onError);
+      Notifications.error(message: onError.toString());
     }).whenComplete(() => loading = false);
   }
 }

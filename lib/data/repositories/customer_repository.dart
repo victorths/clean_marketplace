@@ -13,6 +13,11 @@ class CustomerRepository implements ICustomerRepository {
   @override
   Future<Customer?> getCustomer() async {
     final CustomerMapper mapper = CustomerMapper();
-    return mapper.fromMap((await datasource.getCustomer())["data"]["viewer"]);
+    try {
+      return mapper
+          .fromMap((await datasource.getCustomer())!["data"]["viewer"]);
+    } on Exception {
+      // Repository exception
+    }
   }
 }

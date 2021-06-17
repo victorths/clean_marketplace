@@ -14,8 +14,12 @@ class PurchaseRepository implements IPurchaseRepository {
   @override
   Future<PurchaseResponse?> makePurchase(PurchaseRequest purchase) async {
     final PurchaseMapper mapper = PurchaseMapper();
-    return mapper.fromMap(
-      (await datasource.makePurchase(purchase.offerId!))["data"]["purchase"],
-    );
+    try {
+      return mapper.fromMap(
+        (await datasource.makePurchase(purchase.offerId!))!["data"]["purchase"],
+      );
+    } on Exception {
+      // Repository exception
+    }
   }
 }

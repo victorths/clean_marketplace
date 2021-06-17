@@ -1,4 +1,3 @@
-import 'package:clean_marketplace/data/navigation/routes.dart';
 import 'package:clean_marketplace/presentation/offers/components/offers_list.dart';
 import 'package:flutter/material.dart';
 
@@ -33,15 +32,21 @@ class _OffersScreenState extends State<OffersScreen> {
             ? const Center(child: CircularProgressIndicator())
             : Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 child: Column(
                   children: [
-                    Text("Balance: ${controller.customer?.balance}"),
+                    Obx(
+                      () => Text(
+                        "Balance: ${controller.customer?.balance}",
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
                     SizedBox(
                       height: 20,
                     ),
                     Expanded(
-                        child: OffersList(offers: controller.customer!.offers)),
+                      child: OffersList(offers: controller.customer!.offers),
+                    ),
                   ],
                 ),
               ),

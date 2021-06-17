@@ -14,7 +14,7 @@ class GetCustomerUseCase implements IGetCustomerUseCase {
   @override
   Future<Customer?> call() async {
     try {
-      return repository.getCustomer();
+      return await repository.getCustomer();
     } on Exception {
       throw GetCustomerError();
     }

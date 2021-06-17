@@ -16,17 +16,18 @@ class MakePurchaseUseCase implements IMakePurchaseUseCase {
 
   @override
   Future<PurchaseResponse?> call(PurchaseRequest purchase) async {
+    var response;
     try {
-      final response = await repository.makePurchase(purchase);
-      if (response != null && !response.success) {
-        throw MakePurchaseError(
-          message: response.errorMessage,
-        );
-      } else {
-        return response;
-      }
+      response = await repository.makePurchase(purchase);
     } on Exception {
       throw MakePurchaseError();
+    }
+    if (response != null && !response.success) {
+      throw MakePurchaseError(
+        message: response.errorMessage,
+      );
+    } else {
+      return response;
     }
   }
 }
